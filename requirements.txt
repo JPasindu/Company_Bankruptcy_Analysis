@@ -1,0 +1,8 @@
+Flask
+Werkzeug
+pandas
+numpy
+scikit-learn
+joblib
+openpyxl
+python-dateutil

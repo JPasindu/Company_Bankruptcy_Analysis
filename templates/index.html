@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 mb-4">
+                    <i class="bi bi-graph-up-arrow"></i><br>
+                    Bankruptcy Risk Analyzer
+                </h1>
+                <p class="lead mb-4">
+                    Automatically extract financial data from Excel and CSV files. 
+                    Supports Balance Sheets, Income Statements, Cash Flow Statements, and more.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Section -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h4 class="mb-0"><i class="bi bi-cloud-upload"></i> Upload Financial Statements</h4>
+                </div>
+                <div class="card-body">
+                    <form action="{{ url_for('upload_files') }}" method="post" enctype="multipart/form-data" id="uploadForm">
+                        <div class="file-upload mb-4">
+                            <i class="bi bi-file-earmark-spreadsheet display-1 text-muted mb-3"></i>
+                            <h5>Drag & Drop or Click to Upload</h5>
+                            <p class="text-muted">Supported formats: Excel (.xlsx, .xls) and CSV (.csv)</p>
+                            <input type="file" class="form-control" id="files" name="files" multiple accept=".xlsx,.xls,.csv" required>
+                            <div class="mt-3">
+                                <small class="text-muted">You can upload multiple files at once</small>
+                            </div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg" id="uploadBtn">
+                                <i class="bi bi-play-circle"></i> Process Files
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Features -->
+            <div class="row mt-5">
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <i class="bi bi-file-text display-4 text-primary mb-3"></i>
+                        <h5>Multiple Statement Types</h5>
+                        <p class="text-muted">Automatically detects Balance Sheets, Income Statements, Cash Flow Statements, and more.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <i class="bi bi-search display-4 text-success mb-3"></i>
+                        <h5>Smart Extraction</h5>
+                        <p class="text-muted">Intelligently maps financial terms to standardized variables using advanced keyword matching.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="text-center">
+                        <i class="bi bi-shield-check display-4 text-warning mb-3"></i>
+                        <h5>Data Validation</h5>
+                        <p class="text-muted">Includes built-in validation checks and warnings for data quality assurance.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Fields -->
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-list-check"></i> Supported Financial Fields</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Revenue</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Total Assets</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Total Liabilities</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Current Assets</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Current Liabilities</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Cash & Equivalents</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Operating Income</li>
+
+                                
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Tax Expense</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Net Income</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Retained Earnings</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Inventory</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> Interest Expense</li>
+                                <li class="list-group-item"><i class="bi bi-check-circle text-success"></i> PPE</li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('uploadForm').addEventListener('submit', function() {
+        const btn = document.getElementById('uploadBtn');
+        btn.innerHTML = '<i class="bi bi-hourglass-split"></i> Processing...';
+        btn.disabled = true;
+    });
+
+    // File input styling
+    const fileInput = document.getElementById('files');
+    fileInput.addEventListener('change', function() {
+        const files = this.files;
+        if (files.length > 0) {
+            const fileNames = Array.from(files).map(f => f.name).join(', ');
+            document.querySelector('.file-upload h5').textContent = `${files.length} file(s) selected`;
+            document.querySelector('.file-upload p').textContent = fileNames;
+        }
+    });
+</script>
+{% endblock %}
