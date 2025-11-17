@@ -131,7 +131,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## **📁 Repository Structure **
+## **📁Repository Structure**
 
 ```
 Bankruptcy-Risk-Analyzer/
